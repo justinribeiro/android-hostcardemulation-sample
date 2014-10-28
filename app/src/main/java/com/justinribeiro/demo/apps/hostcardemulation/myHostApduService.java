@@ -1,8 +1,12 @@
 package com.justinribeiro.demo.apps.hostcardemulation;
 
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.util.Log;
+
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -53,10 +57,55 @@ public class myHostApduService extends HostApduService {
             (byte)0x0f  // Lc field	- Number of bytes present in the data field of the command
     };
 
+    private static final byte[] READ_CAPABILITY_CONTAINER_RESPONSE = {
+            (byte)0x00, // CLA	- Class - Class of instruction
+            (byte)0x0F, // INS	- Instruction - Instruction code
+            (byte)0x20, // P1	- Parameter 1 - Instruction parameter 1
+            (byte)0x00, // P2	- Parameter 2 - Instruction parameter 2
+            (byte)0x3B,  // Lc field	- Number of bytes present in the data field of the command
+            (byte)0x00, (byte)0x34, (byte)0x04, (byte)0x06, (byte)0xE1, (byte)0x04, (byte)0x00, (byte)0x32, (byte)0x00, (byte)0x00, // Data field - String of bytes sent in the data field of the command
+            (byte)0x90, (byte)0x00 // A_OKAY
+    };
+
+    private static final byte[] NDEF_SELECT = {
+            (byte)0x00, // CLA	- Class - Class of instruction
+            (byte)0xa4, // INS	- Instruction - Instruction code
+            (byte)0x00, // P1	- Parameter 1 - Instruction parameter 1
+            (byte)0x0c, // P2	- Parameter 2 - Instruction parameter 2
+            (byte)0x02,  // Lc field	- Number of bytes present in the data field of the command
+            (byte)0xE1, (byte)0x04
+    };
+
+    private static final byte[] NDEF_READ_BINARY_NLEN = {
+            (byte)0x00, // CLA	- Class - Class of instruction
+            (byte)0xb0, // INS	- Instruction - Instruction code
+            (byte)0x00, // P1	- Parameter 1 - Instruction parameter 1
+            (byte)0x00, // P2	- Parameter 2 - Instruction parameter 2
+            (byte)0x02  // Lc field	- Number of bytes present in the data field of the command
+    };
+
+    private static final byte[] NDEF_READ_BINARY_NLEN_RESPONSE = {
+            (byte)0x00,
+            (byte)0x0f,
+            (byte)0x90, (byte)0x00 // A_OKAY
+    };
+
     private static final byte[] A_OKAY = {
             (byte)0x90,  // SW1	Status byte 1 - Command processing status
             (byte)0x00   // SW2	Status byte 2 - Command processing qualifier
     };
+
+    //
+    //  TESTING ONLY - NdefRecord + NDEF_READ_BINARY_NLEN_RESPONSE
+    //
+    private static final NdefRecord NDEF_URI = new NdefRecord(
+            NdefRecord.TNF_WELL_KNOWN,
+            NdefRecord.RTD_TEXT,
+            null,
+            "textValue".getBytes());
+
+    private static final byte[] NDEF_URI_BYTES = NDEF_URI.toByteArray();
+    private static final byte[] NDEF_URI_LEN = BigInteger.valueOf(NDEF_URI_BYTES.length).toByteArray();
 
     @Override
     public byte[] processCommandApdu(byte[] commandApdu, Bundle extras) {
@@ -75,13 +124,24 @@ public class myHostApduService extends HostApduService {
 
         if (Arrays.equals(READ_CAPABILITY_CONTAINER, commandApdu)) {
             Log.i(TAG, "processCommandApdu() | READ_CAPABILITY_CONTAINER triggered");
+            return READ_CAPABILITY_CONTAINER_RESPONSE;
+        }
+
+        if (Arrays.equals(NDEF_SELECT, commandApdu)) {
+            Log.i(TAG, "processCommandApdu() | NDEF_SELECT triggered");
             return A_OKAY;
         }
 
-        else {
-            Log.i(TAG, "processCommandApdu(): Our Application Received!");
-            return "Hello".getBytes();
+        if (Arrays.equals(NDEF_READ_BINARY_NLEN, commandApdu)) {
+            Log.i(TAG, "processCommandApdu() | NDEF_READ_BINARY_NLEN triggered");
+            return A_OKAY;
         }
+
+        //
+        // We're doing something outside our scope
+        //
+        Log.i(TAG, "processCommandApdu(): Our Application Received, but we don't know what to do.");
+        return "Can I help you?".getBytes();
     }
 
     @Override
