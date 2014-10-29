@@ -20,3 +20,7 @@ You have to follow the commands in your client application. You can also compile
 ## Where can I learn more about Host Card Emulation on Android?
 
 You'll need API 19 (aka Android 4.4) to use HCE. See [Host-based Card Emulation @ developers.android.com](https://developer.android.com/guide/topics/connectivity/nfc/hce.html) for all the details.
+
+## What if I want to interact with or read a Type-4 tag?
+
+This is a different sort of thing and you'll want to look into [ISO-DEP](http://developer.android.com/reference/android/nfc/tech/IsoDep.html).
