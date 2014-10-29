@@ -8,16 +8,7 @@
         <!-- customize the color palette -->
         <item name="colorPrimary">#0d5302</item>
         <item name="colorPrimaryDark">#42bd41</item>
-        <item name="colorAccent">#d0f8ce</item>
-    </style>
-
-    <style name="test" parent="Theme.MyTheme">
-
-        <!-- customize the color palette -->
-        <item name="colorPrimary">#0d5302</item>
-        <item name="colorPrimaryDark">#42bd41</item>
-        <item name="colorAccent">#d0f8ce</item>
-        <item name="android:textColorPrimary">#ffffff</item>
+        <item name="colorAccent">#259b24</item>
     </style>
 
 </resources>

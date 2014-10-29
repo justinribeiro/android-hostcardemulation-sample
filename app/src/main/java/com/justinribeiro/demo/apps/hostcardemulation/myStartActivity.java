@@ -35,7 +35,7 @@ public class myStartActivity extends ActionBarActivity {
                //
                // TODO: add validation
                //
-               TextView getNdefString = (TextView) view.findViewById(R.id.ndef_text);
+               TextView getNdefString = (TextView) findViewById(R.id.ndef_text);
                String test = getNdefString.getText().toString();
 
                Intent intent = new Intent(view.getContext(), myHostApduService.class);
