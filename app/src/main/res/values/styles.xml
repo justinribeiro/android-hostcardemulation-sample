@@ -1,8 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- extend one of the Theme.AppCompat themes -->
+    <style name="Theme.MyTheme" parent="Theme.AppCompat.Light">
+        <item name="windowActionBar">false</item>
+        <item name="actionBarStyle">@style/Base.Theme.AppCompat.Light.DarkActionBar</item>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <!-- customize the color palette -->
+        <item name="colorPrimary">#0d5302</item>
+        <item name="colorPrimaryDark">#42bd41</item>
+        <item name="colorAccent">#d0f8ce</item>
+    </style>
+
+    <style name="test" parent="Theme.MyTheme">
+
+        <!-- customize the color palette -->
+        <item name="colorPrimary">#0d5302</item>
+        <item name="colorPrimaryDark">#42bd41</item>
+        <item name="colorAccent">#d0f8ce</item>
+        <item name="android:textColorPrimary">#ffffff</item>
     </style>
 
 </resources>

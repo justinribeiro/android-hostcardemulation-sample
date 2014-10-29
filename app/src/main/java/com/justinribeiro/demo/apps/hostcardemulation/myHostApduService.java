@@ -1,5 +1,6 @@
 package com.justinribeiro.demo.apps.hostcardemulation;
 
+import android.content.Intent;
 import android.nfc.NdefRecord;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
@@ -100,21 +101,39 @@ public class myHostApduService extends HostApduService {
             (byte)0x00   // SW2	Status byte 2 - Command processing qualifier
     };
 
-    //
-    //  TESTING ONLY - Let's make a static NdefRecord!
-    //
     private static final byte[] NDEF_ID = {
             (byte)0xE1,
             (byte)0x04
     };
-    private static final NdefRecord NDEF_URI = new NdefRecord(
+
+    private NdefRecord NDEF_URI = new NdefRecord(
             NdefRecord.TNF_WELL_KNOWN,
             NdefRecord.RTD_TEXT,
             NDEF_ID,
             "Hello world!".getBytes(Charset.forName("UTF-8"))
     );
-    private static final byte[] NDEF_URI_BYTES = NDEF_URI.toByteArray();
-    private static final byte[] NDEF_URI_LEN = BigInteger.valueOf(NDEF_URI_BYTES.length).toByteArray();
+    private byte[] NDEF_URI_BYTES = NDEF_URI.toByteArray();
+    private byte[] NDEF_URI_LEN = BigInteger.valueOf(NDEF_URI_BYTES.length).toByteArray();
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if (intent.hasExtra("ndefMessage")) {
+            NDEF_URI = new NdefRecord(
+                    NdefRecord.TNF_WELL_KNOWN,
+                    NdefRecord.RTD_TEXT,
+                    NDEF_ID,
+                    intent.getStringExtra("ndefMessage").getBytes(Charset.forName("UTF-8"))
+            );
+
+            NDEF_URI_BYTES = NDEF_URI.toByteArray();
+            NDEF_URI_LEN = BigInteger.valueOf(NDEF_URI_BYTES.length).toByteArray();
+        }
+
+        Log.i(TAG, "onStartCommand() | NDEF" + NDEF_URI.toString());
+
+        return 0;
+    }
 
     @Override
     public byte[] processCommandApdu(byte[] commandApdu, Bundle extras) {

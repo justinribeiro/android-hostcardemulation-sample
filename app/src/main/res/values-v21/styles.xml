@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.Material.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="test" parent="Theme.MyTheme">
+        <!-- customize the color palette -->
+        <item name="colorPrimary">#0d5302</item>
+        <item name="colorPrimaryDark">#42bd41</item>
+        <item name="colorAccent">#d0f8ce</item>
     </style>
 </resources>
