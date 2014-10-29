@@ -1,3 +1,16 @@
+/**
+Modified from original example @ Libnfc:
+http://nfc-tools.org/index.php?title=Libnfc:APDU_example
+
+Allows testing of Host-based Card Emulatio Android example at
+https://github.com/justinribeiro/android-hostcardemulation-sample
+
+Requires Libnfc:
+http://nfc-tools.org/index.php?title=Libnfc
+
+To compile:
+gcc -o apdu_tag_test apdu_tag_test.c -lnfc
+*/
 #include <stdlib.h>
 #include <string.h>
 #include <nfc/nfc.h>
