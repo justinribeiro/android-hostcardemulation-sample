@@ -147,7 +147,7 @@ public class myHostApduService extends HostApduService {
         //
         // First command: NDEF Tag Application select (Section 5.5.2 in NFC Forum spec)
         //
-        if (Arrays.equals(APDU_SELECT, commandApdu)) {
+        if (utils.isEqual(APDU_SELECT, commandApdu)) {
             Log.i(TAG, "APDU_SELECT triggered. Our Response: " + utils.bytesToHex(A_OKAY));
             return A_OKAY;
         }
@@ -155,7 +155,7 @@ public class myHostApduService extends HostApduService {
         //
         // Second command: Capability Container select (Section 5.5.3 in NFC Forum spec)
         //
-        if (Arrays.equals(CAPABILITY_CONTAINER, commandApdu)) {
+        if (utils.isEqual(CAPABILITY_CONTAINER, commandApdu)) {
             Log.i(TAG, "CAPABILITY_CONTAINER triggered. Our Response: " + utils.bytesToHex(A_OKAY));
             return A_OKAY;
         }
@@ -163,7 +163,7 @@ public class myHostApduService extends HostApduService {
         //
         // Third command: ReadBinary data from CC file (Section 5.5.4 in NFC Forum spec)
         //
-        if (Arrays.equals(READ_CAPABILITY_CONTAINER, commandApdu) && !READ_CAPABILITY_CONTAINER_CHECK) {
+        if (utils.isEqual(READ_CAPABILITY_CONTAINER, commandApdu) && !READ_CAPABILITY_CONTAINER_CHECK) {
             Log.i(TAG, "READ_CAPABILITY_CONTAINER triggered. Our Response: " + utils.bytesToHex(READ_CAPABILITY_CONTAINER_RESPONSE));
             READ_CAPABILITY_CONTAINER_CHECK = true;
             return READ_CAPABILITY_CONTAINER_RESPONSE;
@@ -172,7 +172,7 @@ public class myHostApduService extends HostApduService {
         //
         // Fourth command: NDEF Select command (Section 5.5.5 in NFC Forum spec)
         //
-        if (Arrays.equals(NDEF_SELECT, commandApdu)) {
+        if (utils.isEqual(NDEF_SELECT, commandApdu)) {
             Log.i(TAG, "NDEF_SELECT triggered. Our Response: " + utils.bytesToHex(A_OKAY));
             return A_OKAY;
         }
@@ -180,7 +180,7 @@ public class myHostApduService extends HostApduService {
         //
         // Fifth command:  ReadBinary, read NLEN field
         //
-        if (Arrays.equals(NDEF_READ_BINARY_NLEN, commandApdu)) {
+        if (utils.isEqual(NDEF_READ_BINARY_NLEN, commandApdu)) {
 
             byte[] start = {
                     (byte)0x00
@@ -201,7 +201,7 @@ public class myHostApduService extends HostApduService {
         //
         // Sixth command: ReadBinary, get NDEF data
         //
-        if (Arrays.equals(NDEF_READ_BINARY_GET_NDEF, commandApdu)) {
+        if (utils.isEqual(NDEF_READ_BINARY_GET_NDEF, commandApdu)) {
             Log.i(TAG, "processCommandApdu() | NDEF_READ_BINARY_GET_NDEF triggered");
 
             byte[] start = {

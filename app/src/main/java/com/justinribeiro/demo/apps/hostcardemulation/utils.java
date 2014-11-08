@@ -5,9 +5,9 @@ package com.justinribeiro.demo.apps.hostcardemulation;
  */
 
 /**
- * Just a tiny class to dump things that I may want to use for debugging
+ * Just a tiny class to dump things that I may want to use
  *
- * AKA: you probably don't need this. :-)
+ * AKA: you probably don't need this, but you might :-)
  */
 public class utils {
 
@@ -29,5 +29,26 @@ public class utils {
             hexChars[j * 2 + 1] = hexArray[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+    /**
+     * Constant-time Byte Array Comparison
+     * Less overheard, safer. Originally from: http://codahale.com/a-lesson-in-timing-attacks/
+     *
+     * @param bytes yourByteArrayA
+     * @param bytes yourByteArrayB
+     * @return boolean
+     *
+     */
+    public static boolean isEqual(byte[] a, byte[] b) {
+        if (a.length != b.length) {
+            return false;
+        }
+
+        int result = 0;
+        for (int i = 0; i < a.length; i++) {
+            result |= a[i] ^ b[i];
+        }
+        return result == 0;
     }
 }
