@@ -1,10 +1,13 @@
 package com.justinribeiro.demo.apps.hostcardemulation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.NdefRecord;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -128,6 +131,13 @@ public class myHostApduService extends HostApduService {
 
             NDEF_URI_BYTES = NDEF_URI.toByteArray();
             NDEF_URI_LEN = BigInteger.valueOf(NDEF_URI_BYTES.length).toByteArray();
+
+            Context context = getApplicationContext();
+            CharSequence text = "Your NDEF text has been set!";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
 
         Log.i(TAG, "onStartCommand() | NDEF" + NDEF_URI.toString());
@@ -193,6 +203,7 @@ public class myHostApduService extends HostApduService {
             System.arraycopy(NDEF_URI_LEN, 0, response, start.length, NDEF_URI_LEN.length);
             System.arraycopy(A_OKAY, 0, response, start.length + NDEF_URI_LEN.length, A_OKAY.length);
 
+            Log.i(TAG, response.toString());
             Log.i(TAG, "NDEF_READ_BINARY_NLEN triggered. Our Response: " + utils.bytesToHex(response));
 
             return response;
@@ -216,6 +227,7 @@ public class myHostApduService extends HostApduService {
             System.arraycopy(NDEF_URI_BYTES, 0, response, start.length + NDEF_URI_LEN.length, NDEF_URI_BYTES.length);
             System.arraycopy(A_OKAY, 0, response, start.length + NDEF_URI_LEN.length + NDEF_URI_BYTES.length, A_OKAY.length);
 
+            Log.i(TAG, NDEF_URI.toString());
             Log.i(TAG, "NDEF_READ_BINARY_GET_NDEF triggered. Our Response: " + utils.bytesToHex(response));
 
             READ_CAPABILITY_CONTAINER_CHECK = false;
