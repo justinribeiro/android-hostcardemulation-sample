@@ -230,6 +230,13 @@ public class myHostApduService extends HostApduService {
             Log.i(TAG, NDEF_URI.toString());
             Log.i(TAG, "NDEF_READ_BINARY_GET_NDEF triggered. Our Response: " + utils.bytesToHex(response));
 
+            Context context = getApplicationContext();
+            CharSequence text = "NDEF text has been sent to the reader!";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
             READ_CAPABILITY_CONTAINER_CHECK = false;
             return response;
         }
