@@ -6,9 +6,12 @@
     </style>
 
     <style name="test" parent="Theme.MyTheme">
-        <!-- customize the color palette -->
-        <item name="colorPrimary">#0d5302</item>
-        <item name="colorPrimaryDark">#42bd41</item>
-        <item name="colorAccent">#259b24</item>
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">#8BC34A</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">#689F38</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">#B2FF59</item>
     </style>
 </resources>
