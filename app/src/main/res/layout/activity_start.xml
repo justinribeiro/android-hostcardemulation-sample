@@ -11,7 +11,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:titleTextAppearance="@style/test"
-        android:minHeight="?android:attr/actionBarSize" />
+        android:minHeight="?attr/actionBarSize" />
 
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
